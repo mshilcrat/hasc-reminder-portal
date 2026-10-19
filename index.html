@@ -43,7 +43,7 @@ const add=document.createElement('button');add.textContent='+ New Reminder';add.
 for(const item of items){const line=document.createElement('div');line.style.cssText='border-bottom:1px solid #e3e8f1;padding:12px 0';const info=document.createElement('p');info.textContent=item.message+' · '+item.email+' · '+item.date+' '+item.time+' · '+item.repeat+' · '+(item.paused?'Paused':'Active (test only)');line.append(info);for(const [label,fn,cls] of [['Edit',()=>show(name,item),'secondary'],[item.paused?'Resume':'Pause',()=>{item.paused=!item.paused;save();showList(name)},'secondary'],['Delete',()=>{if(confirm('Delete this test reminder?')){all=all.filter(x=>x.id!==item.id);save();showList(name)}},'danger']]){const b=document.createElement('button');b.textContent=label;b.className=cls;b.style.marginRight='6px';b.onclick=fn;line.append(b)}wrapper.append(line)}
 if(!items.length){const empty=document.createElement('p');empty.textContent='No reminders configured.';wrapper.append(empty)}
 const close=document.createElement('button');close.textContent='Close';close.className='secondary';close.onclick=()=>wrapper.remove();wrapper.append(close);
-document.getElementById('taskReminderList')?.remove();wrapper.id='taskReminderList';document.getElementById('reminderLab').append(wrapper);wrapper.scrollIntoView({behavior:'smooth',block:'nearest'})}
+document.getElementById('taskReminderList')?.remove();wrapper.id='taskReminderList';document.querySelector('main.panel').append(wrapper);wrapper.scrollIntoView({behavior:'smooth',block:'nearest'})}
 window.hascTaskReminders={open:showList,count:name=>all.filter(x=>x.folder===name).length};
 })();
 </script></body></html>
