@@ -36,7 +36,7 @@ const key='hasc-rnd-task-reminders-v1';let all=[];try{const v=JSON.parse(localSt
 const dlg=document.getElementById('taskReminderDialog'),form=document.getElementById('taskReminderForm'),title=document.getElementById('taskReminderTitle');
 const msg=document.getElementById('taskReminderMessage'),email=document.getElementById('taskReminderEmail'),date=document.getElementById('taskReminderDate'),time=document.getElementById('taskReminderTime'),repeat=document.getElementById('taskReminderRepeat');
 let target='',editing=null;
-function save(){localStorage.setItem(key,JSON.stringify(all));if(typeof render==='function')render()}
+function save(){localStorage.setItem(key,JSON.stringify(all));document.getElementById('search')?.dispatchEvent(new Event('input'))}
 function show(name,item){target=name;editing=item||null;title.textContent=(item?'Edit':'New')+' Task Reminder — '+name;msg.value=item?.message||'Reminder: '+name;email.value=item?.email||'';date.value=item?.date||'';time.value=item?.time||'09:00';repeat.value=item?.repeat||'monthly';dlg.showModal()}
 form.addEventListener('submit',e=>{e.preventDefault();const data={folder:target,message:msg.value.trim(),email:email.value.trim(),date:date.value,time:time.value,repeat:repeat.value,paused:editing?.paused||false,id:editing?.id||String(Date.now())+'-'+Math.random().toString(36).slice(2)};if(!data.message||!data.email||!data.date||!data.time)return;if(editing)all=all.map(x=>x.id===editing.id?data:x);else all.push(data);save();dlg.close();showList(target)});
 document.getElementById('taskReminderCancel').onclick=()=>dlg.close();
